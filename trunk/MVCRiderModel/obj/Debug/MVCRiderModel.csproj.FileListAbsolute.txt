@@ -1,0 +1,8 @@
+E:\Excersicing\MVCRider\MVCRiderModel\bin\Debug\MVCRiderDataBase.mdf
+E:\Excersicing\MVCRider\MVCRiderModel\bin\Debug\MVCRiderDataBase_log.ldf
+E:\Excersicing\MVCRider\MVCRiderModel\bin\Debug\MVCRiderModel.dll.config
+E:\Excersicing\MVCRider\MVCRiderModel\bin\Debug\MVCRiderModel.dll
+E:\Excersicing\MVCRider\MVCRiderModel\bin\Debug\MVCRiderModel.pdb
+E:\Excersicing\MVCRider\MVCRiderModel\obj\Debug\ResolveAssemblyReference.cache
+E:\Excersicing\MVCRider\MVCRiderModel\obj\Debug\MVCRiderModel.dll
+E:\Excersicing\MVCRider\MVCRiderModel\obj\Debug\MVCRiderModel.pdb
