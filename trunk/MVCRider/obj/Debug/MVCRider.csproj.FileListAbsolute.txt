@@ -1,9 +1,0 @@
-E:\Excersicing\MVCRider\MVCRider\bin\MVCRiderDataBase.mdf
-E:\Excersicing\MVCRider\MVCRider\bin\MVCRiderDataBase_log.ldf
-E:\Excersicing\MVCRider\MVCRider\bin\MVCRider.dll
-E:\Excersicing\MVCRider\MVCRider\bin\MVCRider.pdb
-E:\Excersicing\MVCRider\MVCRider\bin\MVCRiderModel.dll
-E:\Excersicing\MVCRider\MVCRider\bin\MVCRiderModel.pdb
-E:\Excersicing\MVCRider\MVCRider\obj\Debug\ResolveAssemblyReference.cache
-E:\Excersicing\MVCRider\MVCRider\obj\Debug\MVCRider.dll
-E:\Excersicing\MVCRider\MVCRider\obj\Debug\MVCRider.pdb
