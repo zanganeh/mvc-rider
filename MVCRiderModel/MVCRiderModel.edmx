@@ -4,10 +4,63 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="MVCRiderDataBaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="MVCRiderDataBaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="MVCRiderDataBaseModelStoreContainer">
+          <EntitySet Name="Category" EntityType="MVCRiderDataBaseModel.Store.Category" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Comment" EntityType="MVCRiderDataBaseModel.Store.Comment" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CommentStatus" EntityType="MVCRiderDataBaseModel.Store.CommentStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Post" EntityType="MVCRiderDataBaseModel.Store.Post" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PostTag" EntityType="MVCRiderDataBaseModel.Store.PostTag" store:Type="Tables" store:Schema="dbo" store:Name="PostTag">
+            <DefiningQuery>SELECT 
+      [PostTag].[int] AS [int], 
+      [PostTag].[intPost] AS [intPost], 
+      [PostTag].[intTag] AS [intTag]
+      FROM [dbo].[PostTag] AS [PostTag]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Tag" EntityType="MVCRiderDataBaseModel.Store.Tag" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Comment_Post" Association="MVCRiderDataBaseModel.Store.FK_Comment_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_Category" Association="MVCRiderDataBaseModel.Store.FK_Post_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_CommentStatus" Association="MVCRiderDataBaseModel.Store.FK_Post_CommentStatus">
+            <End Role="CommentStatus" EntitySet="CommentStatus" />
+            <End Role="Post" EntitySet="Post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostTag_Post" Association="MVCRiderDataBaseModel.Store.FK_PostTag_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="PostTag" EntitySet="PostTag" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostTag_Tag" Association="MVCRiderDataBaseModel.Store.FK_PostTag_Tag">
+            <End Role="Tag" EntitySet="Tag" />
+            <End Role="PostTag" EntitySet="PostTag" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="idPost" Type="int" Nullable="false" />
+          <Property Name="body" Type="varchar" Nullable="false" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="CommentStatus">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" Nullable="false" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Post">
           <Key>
             <PropertyRef Name="id" />
@@ -16,15 +69,122 @@
           <Property Name="title" Type="varchar" Nullable="false" MaxLength="250" />
           <Property Name="body" Type="varchar" />
           <Property Name="active" Type="bit" />
+          <Property Name="idCategory" Type="int" />
+          <Property Name="idCommentStatus" Type="int" />
+          <Property Name="releaseDate" Type="datetime" />
           <Property Name="createdDate" Type="datetime" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'E:\PROJECTS\MVC-RIDER\MVCRIDER\APP_DATA\MVCRIDERDATABASE.MDF.dbo.PostTag' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="PostTag">
+          <Key>
+            <PropertyRef Name="int" />
+            <PropertyRef Name="intPost" />
+            <PropertyRef Name="intTag" />
+          </Key>
+          <Property Name="int" Type="bigint" Nullable="false" />
+          <Property Name="intPost" Type="int" Nullable="false" />
+          <Property Name="intTag" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Comment_Post">
+          <End Role="Post" Type="MVCRiderDataBaseModel.Store.Post" Multiplicity="1" />
+          <End Role="Comment" Type="MVCRiderDataBaseModel.Store.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="idPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_Category">
+          <End Role="Category" Type="MVCRiderDataBaseModel.Store.Category" Multiplicity="0..1" />
+          <End Role="Post" Type="MVCRiderDataBaseModel.Store.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="idCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_CommentStatus">
+          <End Role="CommentStatus" Type="MVCRiderDataBaseModel.Store.CommentStatus" Multiplicity="0..1" />
+          <End Role="Post" Type="MVCRiderDataBaseModel.Store.Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommentStatus">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="idCommentStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostTag_Post">
+          <End Role="Post" Type="MVCRiderDataBaseModel.Store.Post" Multiplicity="1" />
+          <End Role="PostTag" Type="MVCRiderDataBaseModel.Store.PostTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PostTag">
+              <PropertyRef Name="intPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostTag_Tag">
+          <End Role="Tag" Type="MVCRiderDataBaseModel.Store.Tag" Multiplicity="1" />
+          <End Role="PostTag" Type="MVCRiderDataBaseModel.Store.PostTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PostTag">
+              <PropertyRef Name="intTag" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MVCRiderDataBaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="MVCRiderDataBaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Posts" EntityType="MVCRiderDataBaseModel.Post" />
+          <EntitySet Name="Categories" EntityType="MVCRiderDataBaseModel.Category" />
+          <EntitySet Name="Comments" EntityType="MVCRiderDataBaseModel.Comment" />
+          <EntitySet Name="CommentStatus" EntityType="MVCRiderDataBaseModel.CommentStatu" />
+          <EntitySet Name="PostTags" EntityType="MVCRiderDataBaseModel.PostTag" />
+          <EntitySet Name="Tags" EntityType="MVCRiderDataBaseModel.Tag" />
+          <AssociationSet Name="FK_Post_Category" Association="MVCRiderDataBaseModel.FK_Post_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comment_Post" Association="MVCRiderDataBaseModel.FK_Comment_Post">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Post_CommentStatus" Association="MVCRiderDataBaseModel.FK_Post_CommentStatus">
+            <End Role="CommentStatu" EntitySet="CommentStatus" />
+            <End Role="Post" EntitySet="Posts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostTag_Post" Association="MVCRiderDataBaseModel.FK_PostTag_Post">
+            <End Role="Post" EntitySet="Posts" />
+            <End Role="PostTag" EntitySet="PostTags" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PostTag_Tag" Association="MVCRiderDataBaseModel.FK_PostTag_Tag">
+            <End Role="Tag" EntitySet="Tags" />
+            <End Role="PostTag" EntitySet="PostTags" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Post">
           <Key>
@@ -35,7 +195,119 @@
           <Property Name="Body" Type="String" MaxLength="8000" Unicode="false" FixedLength="false" />
           <Property Name="Active" Type="Boolean" />
           <Property Name="CreatedDate" Type="DateTime" />
+          <Property Type="Int32" Name="idCommentStatus" />
+          <Property Type="Int32" Name="idCategory" />
+          <NavigationProperty Name="Category" Relationship="MVCRiderDataBaseModel.FK_Post_Category" FromRole="Post" ToRole="Category" />
+          <NavigationProperty Name="Comments" Relationship="MVCRiderDataBaseModel.FK_Comment_Post" FromRole="Post" ToRole="Comment" />
+          <NavigationProperty Name="CommentStatu" Relationship="MVCRiderDataBaseModel.FK_Post_CommentStatus" FromRole="Post" ToRole="CommentStatu" />
+          <NavigationProperty Name="PostTags" Relationship="MVCRiderDataBaseModel.FK_PostTag_Post" FromRole="Post" ToRole="PostTag" />
+          <Property Type="DateTime" Name="ReleaseDate" />
         </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Posts" Relationship="MVCRiderDataBaseModel.FK_Post_Category" FromRole="Category" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int64" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="idPost" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="MVCRiderDataBaseModel.FK_Comment_Post" FromRole="Comment" ToRole="Post" />
+          <Property Type="String" Name="Body" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="CommentStatu">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Posts" Relationship="MVCRiderDataBaseModel.FK_Post_CommentStatus" FromRole="CommentStatu" ToRole="Post" />
+        </EntityType>
+        <EntityType Name="PostTag">
+          <Key>
+            <PropertyRef Name="int" />
+            <PropertyRef Name="intPost" />
+            <PropertyRef Name="intTag" />
+          </Key>
+          <Property Type="Int64" Name="int" Nullable="false" />
+          <Property Type="Int32" Name="intPost" Nullable="false" />
+          <Property Type="Int32" Name="intTag" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="MVCRiderDataBaseModel.FK_PostTag_Post" FromRole="PostTag" ToRole="Post" />
+          <NavigationProperty Name="Tag" Relationship="MVCRiderDataBaseModel.FK_PostTag_Tag" FromRole="PostTag" ToRole="Tag" />
+        </EntityType>
+        <EntityType Name="Tag">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Type="Int32" Name="id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PostTags" Relationship="MVCRiderDataBaseModel.FK_PostTag_Tag" FromRole="Tag" ToRole="PostTag" />
+        </EntityType>
+        <Association Name="FK_Post_Category">
+          <End Type="MVCRiderDataBaseModel.Category" Role="Category" Multiplicity="0..1" />
+          <End Type="MVCRiderDataBaseModel.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="idCategory" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comment_Post">
+          <End Type="MVCRiderDataBaseModel.Post" Role="Post" Multiplicity="1" />
+          <End Type="MVCRiderDataBaseModel.Comment" Role="Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="idPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Post_CommentStatus">
+          <End Type="MVCRiderDataBaseModel.CommentStatu" Role="CommentStatu" Multiplicity="0..1" />
+          <End Type="MVCRiderDataBaseModel.Post" Role="Post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommentStatu">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Post">
+              <PropertyRef Name="idCommentStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostTag_Post">
+          <End Type="MVCRiderDataBaseModel.Post" Role="Post" Multiplicity="1" />
+          <End Type="MVCRiderDataBaseModel.PostTag" Role="PostTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PostTag">
+              <PropertyRef Name="intPost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PostTag_Tag">
+          <End Type="MVCRiderDataBaseModel.Tag" Role="Tag" Multiplicity="1" />
+          <End Type="MVCRiderDataBaseModel.PostTag" Role="PostTag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tag">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="PostTag">
+              <PropertyRef Name="intTag" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -43,12 +315,57 @@
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MVCRiderDataBaseModelStoreContainer" CdmEntityContainer="MVCRiderDataBaseEntities">
           <EntitySetMapping Name="Posts"><EntityTypeMapping TypeName="MVCRiderDataBaseModel.Post"><MappingFragment StoreEntitySet="Post">
-            <ScalarProperty Name="ID" ColumnName="id" />
+            <ScalarProperty Name="ReleaseDate" ColumnName="releaseDate" />
+                <ScalarProperty Name="idCategory" ColumnName="idCategory" />
+                <ScalarProperty Name="idCommentStatus" ColumnName="idCommentStatus" />
+                <ScalarProperty Name="ID" ColumnName="id" />
             <ScalarProperty Name="Title" ColumnName="title" />
             <ScalarProperty Name="Body" ColumnName="body" />
             <ScalarProperty Name="Active" ColumnName="active" />
             <ScalarProperty Name="CreatedDate" ColumnName="createdDate" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="MVCRiderDataBaseModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="MVCRiderDataBaseModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="Body" ColumnName="body" />
+                <ScalarProperty Name="idPost" ColumnName="idPost" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CommentStatus">
+            <EntityTypeMapping TypeName="MVCRiderDataBaseModel.CommentStatu">
+              <MappingFragment StoreEntitySet="CommentStatus">
+                <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PostTags">
+            <EntityTypeMapping TypeName="MVCRiderDataBaseModel.PostTag">
+              <MappingFragment StoreEntitySet="PostTag">
+                <ScalarProperty Name="intTag" ColumnName="intTag" />
+                <ScalarProperty Name="intPost" ColumnName="intPost" />
+                <ScalarProperty Name="int" ColumnName="int" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tags">
+            <EntityTypeMapping TypeName="MVCRiderDataBaseModel.Tag">
+              <MappingFragment StoreEntitySet="Tag">
+                <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -70,7 +387,34 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="MVCRiderModel">
-        <EntityTypeShape EntityType="MVCRiderDataBaseModel.Post" Width="1.5" PointX="0.75" PointY="0.75" Height="1.9802864583333331" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCRiderDataBaseModel.Post" Width="1.5" PointX="4" PointY="0.5" Height="3.3263964843749996" IsExpanded="true" />
+        <EntityTypeShape EntityType="MVCRiderDataBaseModel.Category" Width="1.5" PointX="1.625" PointY="3.75" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="MVCRiderDataBaseModel.Comment" Width="1.5" PointX="6.25" PointY="3.875" Height="1.7879850260416665" />
+        <EntityTypeShape EntityType="MVCRiderDataBaseModel.CommentStatu" Width="1.5" PointX="0.75" PointY="0.75" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="MVCRiderDataBaseModel.PostTag" Width="1.5" PointX="6.25" PointY="1" Height="1.9802864583333317" />
+        <EntityTypeShape EntityType="MVCRiderDataBaseModel.Tag" Width="1.5" PointX="9" PointY="1.125" Height="1.5956835937499996" />
+        <AssociationConnector Association="MVCRiderDataBaseModel.FK_Post_Category" >
+          <ConnectorPoint PointX="3.125" PointY="4.5067071334635411" />
+          <ConnectorPoint PointX="4.54687375" PointY="4.5067071334635411" />
+          <ConnectorPoint PointX="4.54687375" PointY="3.8263964843749996" />
+        </AssociationConnector>
+        <AssociationConnector Association="MVCRiderDataBaseModel.FK_Comment_Post" >
+          <ConnectorPoint PointX="5.054689375" PointY="3.8263964843749996" />
+          <ConnectorPoint PointX="5.054689375" PointY="5.0848460797526034" />
+          <ConnectorPoint PointX="6.25" PointY="5.0848460797526034" />
+        </AssociationConnector>
+        <AssociationConnector Association="MVCRiderDataBaseModel.FK_Post_CommentStatus" >
+          <ConnectorPoint PointX="2.25" PointY="1.5478417968749998" />
+          <ConnectorPoint PointX="4" PointY="1.5478417968749998" />
+        </AssociationConnector>
+        <AssociationConnector Association="MVCRiderDataBaseModel.FK_PostTag_Post" >
+          <ConnectorPoint PointX="5.5" PointY="1.9901432291666659" />
+          <ConnectorPoint PointX="6.25" PointY="1.9901432291666659" />
+        </AssociationConnector>
+        <AssociationConnector Association="MVCRiderDataBaseModel.FK_PostTag_Tag" >
+          <ConnectorPoint PointX="9" PointY="1.9228417968749998" />
+          <ConnectorPoint PointX="7.75" PointY="1.9228417968749998" />
+        </AssociationConnector>
       </Diagram>
     </Diagrams>
   </Designer>

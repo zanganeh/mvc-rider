@@ -1,0 +1,16 @@
+﻿@model List<MVCRiderModel.Post>
+@{
+    ViewBag.Title = "Home Page";        
+}
+
+<h2>@ViewBag.Message</h2>
+@foreach (var post in Model)
+{
+        <div class="title"><h1><a href="#" target="_self">@post.Title</a></h1><h4>@Html.Label(post.CreatedDate.HasValue ? post.CreatedDate.Value.ToShortDateString() : string.Empty) </h4>
+            <div class="clear"></div>
+        </div> 				
+		<p>@post.Body</p> 
+		<div class="clear"></div> 
+		<div class="permalink"><a href="#Category1" title="Category 1 description" rel="category tag">#Category1</a> | @Html.Label(post.CreatedDate.HasValue ? post.CreatedDate.Value.ToShortTimeString() : string.Empty)
+		<div class="medit"><a href="link#comments" title="دیدگاه‌ها برای مدیونی فک کنی قصد ناراحت کردن هم رو داشتیم !!">@Html.Label(post.Comments.Count > 0 ? post.Comments.Count.ToString() : string.Empty)</a>  </div></div>
+}

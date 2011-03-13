@@ -1,0 +1,34 @@
+﻿@model List<MVCRiderModel.Post>
+
+@{
+    ViewBag.Title = "Posts";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Posts</h2>
+
+<table>
+    <th>
+        <tr>
+            Title
+        </tr>
+        <tr>
+            Action
+        </tr>
+    </th>
+    
+@foreach (var post in this.Model)
+{
+    <tr>
+        <td>
+            @post.Title
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "PostEdit", new { Id=@post.ID})
+        </td>
+    </tr>
+}
+</table>
+<br />
+@Html.ActionLink("Add new", "PostCreate")
+
