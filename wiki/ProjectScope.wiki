@@ -1,0 +1,22 @@
+#Scope of project for phase#1
+
+= Introduction =
+I want to introduce new functionality in MVC 3 with new blog engine. I want to focus on MVC 3 functionality for new by people or migrated from ASP.Net to MVC world.
+
+
+= Details =
+== Functionality: ==
+=== Admin: ===
+
+  * Post:
+    *Has title, body, isActive ,comment_status and release date for each post.
+    *Admin can submit new post, modify existing post and delete existing project.
+  * Comment:
+    *Has one body, relationship with post and isApproved
+    *Admin can add, modify or delete current comment. Approve the current comment.
+
+=== Front end: ===
+  * User can see active post and the post that has current date time had been passed the release date
+  * Base on type of comment of each post use can comment on each post.
+
+_ comment types: no comment, comment only with approval
