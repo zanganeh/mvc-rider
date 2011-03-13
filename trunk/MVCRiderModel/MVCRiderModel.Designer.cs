@@ -16,6 +16,15 @@ using System.Xml.Serialization;
 using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
+#region EDM Relationship Metadata
+
+[assembly: EdmRelationshipAttribute("MVCRiderDataBaseModel", "FK_Post_Category", "Category", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(MVCRiderModel.Category), "Post", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MVCRiderModel.Post), true)]
+[assembly: EdmRelationshipAttribute("MVCRiderDataBaseModel", "FK_Comment_Post", "Post", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MVCRiderModel.Post), "Comment", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MVCRiderModel.Comment), true)]
+[assembly: EdmRelationshipAttribute("MVCRiderDataBaseModel", "FK_Post_CommentStatus", "CommentStatu", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(MVCRiderModel.CommentStatu), "Post", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MVCRiderModel.Post), true)]
+[assembly: EdmRelationshipAttribute("MVCRiderDataBaseModel", "FK_PostTag_Post", "Post", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MVCRiderModel.Post), "PostTag", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MVCRiderModel.PostTag), true)]
+[assembly: EdmRelationshipAttribute("MVCRiderDataBaseModel", "FK_PostTag_Tag", "Tag", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(MVCRiderModel.Tag), "PostTag", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(MVCRiderModel.PostTag), true)]
+
+#endregion
 
 namespace MVCRiderModel
 {
@@ -80,6 +89,86 @@ namespace MVCRiderModel
             }
         }
         private ObjectSet<Post> _Posts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Category> Categories
+        {
+            get
+            {
+                if ((_Categories == null))
+                {
+                    _Categories = base.CreateObjectSet<Category>("Categories");
+                }
+                return _Categories;
+            }
+        }
+        private ObjectSet<Category> _Categories;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Comment> Comments
+        {
+            get
+            {
+                if ((_Comments == null))
+                {
+                    _Comments = base.CreateObjectSet<Comment>("Comments");
+                }
+                return _Comments;
+            }
+        }
+        private ObjectSet<Comment> _Comments;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<CommentStatu> CommentStatus
+        {
+            get
+            {
+                if ((_CommentStatus == null))
+                {
+                    _CommentStatus = base.CreateObjectSet<CommentStatu>("CommentStatus");
+                }
+                return _CommentStatus;
+            }
+        }
+        private ObjectSet<CommentStatu> _CommentStatus;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PostTag> PostTags
+        {
+            get
+            {
+                if ((_PostTags == null))
+                {
+                    _PostTags = base.CreateObjectSet<PostTag>("PostTags");
+                }
+                return _PostTags;
+            }
+        }
+        private ObjectSet<PostTag> _PostTags;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Tag> Tags
+        {
+            get
+            {
+                if ((_Tags == null))
+                {
+                    _Tags = base.CreateObjectSet<Tag>("Tags");
+                }
+                return _Tags;
+            }
+        }
+        private ObjectSet<Tag> _Tags;
 
         #endregion
         #region AddTo Methods
@@ -91,6 +180,46 @@ namespace MVCRiderModel
         {
             base.AddObject("Posts", post);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Categories EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToCategories(Category category)
+        {
+            base.AddObject("Categories", category);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Comments EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToComments(Comment comment)
+        {
+            base.AddObject("Comments", comment);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the CommentStatus EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToCommentStatus(CommentStatu commentStatu)
+        {
+            base.AddObject("CommentStatus", commentStatu);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PostTags EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPostTags(PostTag postTag)
+        {
+            base.AddObject("PostTags", postTag);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Tags EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToTags(Tag tag)
+        {
+            base.AddObject("Tags", tag);
+        }
 
         #endregion
     }
@@ -99,6 +228,366 @@ namespace MVCRiderModel
     #endregion
     
     #region Entities
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="MVCRiderDataBaseModel", Name="Category")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Category : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Category object.
+        /// </summary>
+        /// <param name="id">Initial value of the id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        public static Category CreateCategory(global::System.Int32 id, global::System.String name)
+        {
+            Category category = new Category();
+            category.id = id;
+            category.Name = name;
+            return category;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (_id != value)
+                {
+                    OnidChanging(value);
+                    ReportPropertyChanging("id");
+                    _id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("id");
+                    OnidChanged();
+                }
+            }
+        }
+        private global::System.Int32 _id;
+        partial void OnidChanging(global::System.Int32 value);
+        partial void OnidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MVCRiderDataBaseModel", "FK_Post_Category", "Post")]
+        public EntityCollection<Post> Posts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Post>("MVCRiderDataBaseModel.FK_Post_Category", "Post");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Post>("MVCRiderDataBaseModel.FK_Post_Category", "Post", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="MVCRiderDataBaseModel", Name="Comment")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Comment : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Comment object.
+        /// </summary>
+        /// <param name="id">Initial value of the id property.</param>
+        /// <param name="idPost">Initial value of the idPost property.</param>
+        /// <param name="body">Initial value of the Body property.</param>
+        public static Comment CreateComment(global::System.Int64 id, global::System.Int32 idPost, global::System.String body)
+        {
+            Comment comment = new Comment();
+            comment.id = id;
+            comment.idPost = idPost;
+            comment.Body = body;
+            return comment;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (_id != value)
+                {
+                    OnidChanging(value);
+                    ReportPropertyChanging("id");
+                    _id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("id");
+                    OnidChanged();
+                }
+            }
+        }
+        private global::System.Int64 _id;
+        partial void OnidChanging(global::System.Int64 value);
+        partial void OnidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 idPost
+        {
+            get
+            {
+                return _idPost;
+            }
+            set
+            {
+                OnidPostChanging(value);
+                ReportPropertyChanging("idPost");
+                _idPost = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("idPost");
+                OnidPostChanged();
+            }
+        }
+        private global::System.Int32 _idPost;
+        partial void OnidPostChanging(global::System.Int32 value);
+        partial void OnidPostChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Body
+        {
+            get
+            {
+                return _Body;
+            }
+            set
+            {
+                OnBodyChanging(value);
+                ReportPropertyChanging("Body");
+                _Body = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Body");
+                OnBodyChanged();
+            }
+        }
+        private global::System.String _Body;
+        partial void OnBodyChanging(global::System.String value);
+        partial void OnBodyChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MVCRiderDataBaseModel", "FK_Comment_Post", "Post")]
+        public Post Post
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Post>("MVCRiderDataBaseModel.FK_Comment_Post", "Post").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Post>("MVCRiderDataBaseModel.FK_Comment_Post", "Post").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Post> PostReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Post>("MVCRiderDataBaseModel.FK_Comment_Post", "Post");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Post>("MVCRiderDataBaseModel.FK_Comment_Post", "Post", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="MVCRiderDataBaseModel", Name="CommentStatu")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class CommentStatu : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new CommentStatu object.
+        /// </summary>
+        /// <param name="id">Initial value of the id property.</param>
+        /// <param name="name">Initial value of the Name property.</param>
+        public static CommentStatu CreateCommentStatu(global::System.Int32 id, global::System.String name)
+        {
+            CommentStatu commentStatu = new CommentStatu();
+            commentStatu.id = id;
+            commentStatu.Name = name;
+            return commentStatu;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (_id != value)
+                {
+                    OnidChanging(value);
+                    ReportPropertyChanging("id");
+                    _id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("id");
+                    OnidChanged();
+                }
+            }
+        }
+        private global::System.Int32 _id;
+        partial void OnidChanging(global::System.Int32 value);
+        partial void OnidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MVCRiderDataBaseModel", "FK_Post_CommentStatus", "Post")]
+        public EntityCollection<Post> Posts
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Post>("MVCRiderDataBaseModel.FK_Post_CommentStatus", "Post");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Post>("MVCRiderDataBaseModel.FK_Post_CommentStatus", "Post", value);
+                }
+            }
+        }
+
+        #endregion
+    }
     
     /// <summary>
     /// No Metadata Documentation available.
@@ -248,9 +737,500 @@ namespace MVCRiderModel
         private Nullable<global::System.DateTime> _CreatedDate;
         partial void OnCreatedDateChanging(Nullable<global::System.DateTime> value);
         partial void OnCreatedDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> idCommentStatus
+        {
+            get
+            {
+                return _idCommentStatus;
+            }
+            set
+            {
+                OnidCommentStatusChanging(value);
+                ReportPropertyChanging("idCommentStatus");
+                _idCommentStatus = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("idCommentStatus");
+                OnidCommentStatusChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _idCommentStatus;
+        partial void OnidCommentStatusChanging(Nullable<global::System.Int32> value);
+        partial void OnidCommentStatusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> idCategory
+        {
+            get
+            {
+                return _idCategory;
+            }
+            set
+            {
+                OnidCategoryChanging(value);
+                ReportPropertyChanging("idCategory");
+                _idCategory = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("idCategory");
+                OnidCategoryChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _idCategory;
+        partial void OnidCategoryChanging(Nullable<global::System.Int32> value);
+        partial void OnidCategoryChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> ReleaseDate
+        {
+            get
+            {
+                return _ReleaseDate;
+            }
+            set
+            {
+                OnReleaseDateChanging(value);
+                ReportPropertyChanging("ReleaseDate");
+                _ReleaseDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ReleaseDate");
+                OnReleaseDateChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _ReleaseDate;
+        partial void OnReleaseDateChanging(Nullable<global::System.DateTime> value);
+        partial void OnReleaseDateChanged();
 
         #endregion
     
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MVCRiderDataBaseModel", "FK_Post_Category", "Category")]
+        public Category Category
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Category>("MVCRiderDataBaseModel.FK_Post_Category", "Category").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Category>("MVCRiderDataBaseModel.FK_Post_Category", "Category").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Category> CategoryReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Category>("MVCRiderDataBaseModel.FK_Post_Category", "Category");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Category>("MVCRiderDataBaseModel.FK_Post_Category", "Category", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MVCRiderDataBaseModel", "FK_Comment_Post", "Comment")]
+        public EntityCollection<Comment> Comments
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Comment>("MVCRiderDataBaseModel.FK_Comment_Post", "Comment");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Comment>("MVCRiderDataBaseModel.FK_Comment_Post", "Comment", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MVCRiderDataBaseModel", "FK_Post_CommentStatus", "CommentStatu")]
+        public CommentStatu CommentStatu
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CommentStatu>("MVCRiderDataBaseModel.FK_Post_CommentStatus", "CommentStatu").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CommentStatu>("MVCRiderDataBaseModel.FK_Post_CommentStatus", "CommentStatu").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<CommentStatu> CommentStatuReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<CommentStatu>("MVCRiderDataBaseModel.FK_Post_CommentStatus", "CommentStatu");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<CommentStatu>("MVCRiderDataBaseModel.FK_Post_CommentStatus", "CommentStatu", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MVCRiderDataBaseModel", "FK_PostTag_Post", "PostTag")]
+        public EntityCollection<PostTag> PostTags
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PostTag>("MVCRiderDataBaseModel.FK_PostTag_Post", "PostTag");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PostTag>("MVCRiderDataBaseModel.FK_PostTag_Post", "PostTag", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="MVCRiderDataBaseModel", Name="PostTag")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class PostTag : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new PostTag object.
+        /// </summary>
+        /// <param name="int">Initial value of the int property.</param>
+        /// <param name="intPost">Initial value of the intPost property.</param>
+        /// <param name="intTag">Initial value of the intTag property.</param>
+        public static PostTag CreatePostTag(global::System.Int64 @int, global::System.Int32 intPost, global::System.Int32 intTag)
+        {
+            PostTag postTag = new PostTag();
+            postTag.@int = @int;
+            postTag.intPost = intPost;
+            postTag.intTag = intTag;
+            return postTag;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 @int
+        {
+            get
+            {
+                return _int;
+            }
+            set
+            {
+                if (_int != value)
+                {
+                    OnintChanging(value);
+                    ReportPropertyChanging("int");
+                    _int = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("int");
+                    OnintChanged();
+                }
+            }
+        }
+        private global::System.Int64 _int;
+        partial void OnintChanging(global::System.Int64 value);
+        partial void OnintChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 intPost
+        {
+            get
+            {
+                return _intPost;
+            }
+            set
+            {
+                if (_intPost != value)
+                {
+                    OnintPostChanging(value);
+                    ReportPropertyChanging("intPost");
+                    _intPost = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("intPost");
+                    OnintPostChanged();
+                }
+            }
+        }
+        private global::System.Int32 _intPost;
+        partial void OnintPostChanging(global::System.Int32 value);
+        partial void OnintPostChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 intTag
+        {
+            get
+            {
+                return _intTag;
+            }
+            set
+            {
+                if (_intTag != value)
+                {
+                    OnintTagChanging(value);
+                    ReportPropertyChanging("intTag");
+                    _intTag = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("intTag");
+                    OnintTagChanged();
+                }
+            }
+        }
+        private global::System.Int32 _intTag;
+        partial void OnintTagChanging(global::System.Int32 value);
+        partial void OnintTagChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MVCRiderDataBaseModel", "FK_PostTag_Post", "Post")]
+        public Post Post
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Post>("MVCRiderDataBaseModel.FK_PostTag_Post", "Post").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Post>("MVCRiderDataBaseModel.FK_PostTag_Post", "Post").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Post> PostReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Post>("MVCRiderDataBaseModel.FK_PostTag_Post", "Post");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Post>("MVCRiderDataBaseModel.FK_PostTag_Post", "Post", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MVCRiderDataBaseModel", "FK_PostTag_Tag", "Tag")]
+        public Tag Tag
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Tag>("MVCRiderDataBaseModel.FK_PostTag_Tag", "Tag").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Tag>("MVCRiderDataBaseModel.FK_PostTag_Tag", "Tag").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Tag> TagReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Tag>("MVCRiderDataBaseModel.FK_PostTag_Tag", "Tag");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Tag>("MVCRiderDataBaseModel.FK_PostTag_Tag", "Tag", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="MVCRiderDataBaseModel", Name="Tag")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Tag : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Tag object.
+        /// </summary>
+        /// <param name="id">Initial value of the id property.</param>
+        public static Tag CreateTag(global::System.Int32 id)
+        {
+            Tag tag = new Tag();
+            tag.id = id;
+            return tag;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 id
+        {
+            get
+            {
+                return _id;
+            }
+            set
+            {
+                if (_id != value)
+                {
+                    OnidChanging(value);
+                    ReportPropertyChanging("id");
+                    _id = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("id");
+                    OnidChanged();
+                }
+            }
+        }
+        private global::System.Int32 _id;
+        partial void OnidChanging(global::System.Int32 value);
+        partial void OnidChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Name
+        {
+            get
+            {
+                return _Name;
+            }
+            set
+            {
+                OnNameChanging(value);
+                ReportPropertyChanging("Name");
+                _Name = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Name");
+                OnNameChanged();
+            }
+        }
+        private global::System.String _Name;
+        partial void OnNameChanging(global::System.String value);
+        partial void OnNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("MVCRiderDataBaseModel", "FK_PostTag_Tag", "PostTag")]
+        public EntityCollection<PostTag> PostTags
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<PostTag>("MVCRiderDataBaseModel.FK_PostTag_Tag", "PostTag");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PostTag>("MVCRiderDataBaseModel.FK_PostTag_Tag", "PostTag", value);
+                }
+            }
+        }
+
+        #endregion
     }
 
     #endregion
