@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCRiderDataBaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="MVCRiderDataBaseModelStoreContainer">
+    <EntitySet Name="Post" EntityType="MVCRiderDataBaseModel.Store.Post" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="Post">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="title" Type="varchar" Nullable="false" MaxLength="250" />
+    <Property Name="body" Type="varchar" />
+    <Property Name="active" Type="bit" />
+    <Property Name="createdDate" Type="datetime" />
+  </EntityType>
+</Schema>

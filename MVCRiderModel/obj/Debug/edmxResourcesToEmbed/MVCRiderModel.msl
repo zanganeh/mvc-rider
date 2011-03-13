@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MVCRiderDataBaseModelStoreContainer" CdmEntityContainer="MVCRiderDataBaseEntities">
+    <EntitySetMapping Name="Posts">
+      <EntityTypeMapping TypeName="MVCRiderDataBaseModel.Post">
+        <MappingFragment StoreEntitySet="Post">
+          <ScalarProperty Name="ID" ColumnName="id" />
+          <ScalarProperty Name="Title" ColumnName="title" />
+          <ScalarProperty Name="Body" ColumnName="body" />
+          <ScalarProperty Name="Active" ColumnName="active" />
+          <ScalarProperty Name="CreatedDate" ColumnName="createdDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
