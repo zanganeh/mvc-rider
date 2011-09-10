@@ -1,0 +1,18 @@
+<html>
+<head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-nightly.min.js"></script>
+    <script type="text/javascript">
+        $.ajax({
+            url: "http://localhost:56889/Service1.svc/GetDataUsingDataContract",
+            type: "POST",
+            contentType: "application/json",
+            data: '{"BoolValue":true,"StringValue":"String content"}',
+            dataType: "json",            
+            success: function (data) { alert(data.StringValue); },
+            error: function (data) { alert('error1'); }
+        });
+    </script>
+</head>
+<body>
+</body>
+</html>
