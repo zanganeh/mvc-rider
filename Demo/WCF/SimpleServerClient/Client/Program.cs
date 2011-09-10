@@ -9,6 +9,8 @@ namespace Client
     {
         static void Main(string[] args)
         {
+            ServerManager.CalculatorClient client = new ServerManager.CalculatorClient();
+            Console.WriteLine("This is a client");
         }
     }
 }

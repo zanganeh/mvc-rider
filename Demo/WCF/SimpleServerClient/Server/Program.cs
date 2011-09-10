@@ -10,6 +10,7 @@ namespace Server
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("This is a server");
             ServiceHost serviceHost = new ServiceHost(typeof(Calculator));
             try
             {
