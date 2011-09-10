@@ -1,0 +1,6 @@
+E:\Projects\Demo\WCF\SimpleServerClient\Server\bin\Debug\Server.exe.config
+E:\Projects\Demo\WCF\SimpleServerClient\Server\bin\Debug\Server.exe
+E:\Projects\Demo\WCF\SimpleServerClient\Server\bin\Debug\Server.pdb
+E:\Projects\Demo\WCF\SimpleServerClient\Server\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\Projects\Demo\WCF\SimpleServerClient\Server\obj\x86\Debug\Server.exe
+E:\Projects\Demo\WCF\SimpleServerClient\Server\obj\x86\Debug\Server.pdb
